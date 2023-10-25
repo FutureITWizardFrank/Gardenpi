@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jackson Kush Stream</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>
+        <center>Jackson Kush Stream:</center>
+
+        <Center><img src="/video_feed" alt="camera feed"></Center>
+    </h1>
+    <h2>
+        <center>Arduino Control:</center>
+
+        <center><input type="text" id="command" placeholder="Enter command"></center>
+        <center><button onclick="sendCommand()">Send Command</button></center>
+        <center>Response: <span id="response"></span></center>
+    </h2>
+
+    <script>
+        function sendCommand() {
+            const command = $('#command').val();
+            $.post('/send_command', { command: command }, function (data) {
+                const formattedResponse = data.response.replace(/\n/g, '<br>');
+                $('#response').text(data.response);
+            });
+        }
+    </script>
+</body>
+
+</html>
